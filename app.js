@@ -1,3 +1,5 @@
+const express = require('express');
+const app = express();
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
@@ -6,37 +8,38 @@ const uri = process.env.MONGODB_CONNECTION_URI;
 
 const client = new MongoClient(uri);
 
-async function connect() {
-  try {
-    await client.connect();
+// Connect to MongoDB Atlas
+client.connect()
+  .then(() => {
     console.log('Connected to MongoDB Atlas');
 
-    const database = client.db('<database>');
-    const collection = database.collection('<collection>');
+    // Set up routes
+    const chatRoutes = require('./routes/chatRoutes');
+    const authRoutes = require('./routes/authRoutes');
 
-    // Perform database operations here
+    app.use('/api/chats', chatRoutes);
+    app.use('/api/auth', authRoutes);
 
-  } catch (error) {
-    console.error('Error connecting to MongoDB Atlas:', error);
-  }
-}
+    // Other middleware and configurations
 
-async function disconnect() {
-  try {
-    await client.close();
-    console.log('Disconnected from MongoDB Atlas');
-  } catch (error) {
-    console.error('Error disconnecting from MongoDB Atlas:', error);
-  }
-}
-
-connect()
-  .then(() => {
-    // Call your desired function here to perform database operations
-    // Once the operations are done, call disconnect() to close the connection
-    // Example:
-    // performDatabaseOperations()
-    //   .then(() => disconnect())
-    //   .catch((error) => console.error('Error performing database operations:', error));
+    // Start the server
+    app.listen(3000, () => {
+      console.log('Server listening on port 3000');
+    });
   })
-  .catch((error) => console.error('Error connecting to MongoDB Atlas:', error));
+  .catch((error) => {
+    console.error('Error connecting to MongoDB Atlas:', error);
+  });
+
+// Handle disconnecting from MongoDB Atlas
+process.on('SIGINT', () => {
+  client.close()
+    .then(() => {
+      console.log('Disconnected from MongoDB Atlas');
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error('Error disconnecting from MongoDB Atlas:', error);
+      process.exit(1);
+    });
+});
