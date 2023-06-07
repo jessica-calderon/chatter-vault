@@ -1,42 +1,42 @@
-import { Key, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function ChatList() {
-    const [savedChats, setSavedChats] = useState([]);
-
-    useEffect(() => {
-        const chats = JSON.parse(localStorage.getItem("savedChats") || "[]");
-        setSavedChats(chats);
-    }, []);
-
-    const navigate = useNavigate();
-
-    const handleChatClick = (chat: { id: any }) => {
-        navigate(`/chat/${chat.id}`);
-    };
-
-    return (
-        <div>
-            <h2>Chat List</h2>
-            {savedChats.map(
-                (chat: {
-                    id: Key | null | undefined;
-                    title:
-                        | string
-                        | number
-                        | boolean
-                        | ReactElement<any, string | JSXElementConstructor<any>>
-                        | ReactFragment
-                        | ReactPortal
-                        | null
-                        | undefined;
-                }) => (
-                    <div key={chat.id} onClick={() => handleChatClick(chat)}>
-                        {chat.title}
-                    </div>
-                )
-            )}
-        </div>
-    );
+interface Chat {
+  id: string;
+  title: string;
 }
+// TODO: fix delete if same name, or dont allow duplicate names
+function ChatList() {
+  const [savedChats, setSavedChats] = useState<Chat[]>([]);
+
+  useEffect(() => {
+    const chats: Chat[] = JSON.parse(localStorage.getItem("savedChats") || "[]");
+    setSavedChats(chats);
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleChatClick = (chat: Chat) => {
+    navigate(`/chat/${chat.id}`);
+  };
+
+  const handleChatDelete = (chatId: string) => {
+    const updatedChats = savedChats.filter((chat) => chat.id !== chatId);
+    setSavedChats(updatedChats);
+    localStorage.setItem("savedChats", JSON.stringify(updatedChats));
+  };
+
+  return (
+    <div>
+      <h2>Chat List</h2>
+      {savedChats.map((chat) => (
+        <div key={chat.id}>
+          <span onClick={() => handleChatClick(chat)}>{chat.title}</span>
+          <button onClick={() => handleChatDelete(chat.id)}>Delete</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default ChatList;
