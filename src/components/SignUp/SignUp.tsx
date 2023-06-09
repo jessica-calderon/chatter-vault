@@ -15,7 +15,7 @@ function Signup() {
     return (
         <form onSubmit={handleSubmit} className='space-y-4 flex flex-col h-full'>
             <div className='flex-grow'>
-                <label className='text-[28px] font-bold text-white'>Login</label>
+                <label className='text-[28px] font-bold text-white'>Sign Up</label>
                 <div className='relative mt-2'>
                     <input
                         type='text'

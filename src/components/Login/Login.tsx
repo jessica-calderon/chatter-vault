@@ -15,7 +15,7 @@ function Login() {
         <form onSubmit={handleSubmit} className='space-y-4 flex flex-col h-full'>
             <div className='flex-grow'>
                 <label className='text-[28px] font-bold text-white'>
-                    Sign Up
+                    Login
                 </label>
                 <div className='relative mt-2'>
                     <input
