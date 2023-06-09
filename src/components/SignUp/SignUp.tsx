@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FaUserPlus } from "react-icons/fa";
+import { FaUserPlus, FaEnvelope, FaKey } from "react-icons/fa";
 
 function Signup() {
     const [username, setUsername] = useState("");
@@ -36,7 +36,7 @@ function Signup() {
                         onChange={(e) => setEmail(e.target.value)}
                         className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-white bg-gray-700 pl-8'
                     />
-                    <FaUserPlus className='absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-400' />
+                    <FaEnvelope className='absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-400' />
                 </div>
             </div>
             <div className='flex-grow'>
@@ -48,7 +48,7 @@ function Signup() {
                         onChange={(e) => setPassword(e.target.value)}
                         className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-white bg-gray-700 pl-8'
                     />
-                    <FaUserPlus className='absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-400' />
+                    <FaKey className='absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-400' />
                 </div>
             </div>
             <div>

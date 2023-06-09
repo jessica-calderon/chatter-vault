@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FaSignInAlt } from "react-icons/fa";
+import { FaSignInAlt, FaEnvelope, FaKey } from "react-icons/fa";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -15,7 +15,7 @@ function Login() {
         <form onSubmit={handleSubmit} className='space-y-4 flex flex-col h-full'>
             <div className='flex-grow'>
                 <label className='text-[28px] font-bold text-white'>
-                    Login
+                    Sign Up
                 </label>
                 <div className='relative mt-2'>
                     <input
@@ -25,7 +25,7 @@ function Login() {
                         onChange={(e) => setUsername(e.target.value)}
                         className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-white bg-gray-700 pl-8'
                     />
-                    <FaSignInAlt className='absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-400' />
+                    <FaEnvelope className='absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-400' />
                 </div>
             </div>
             <div className='flex-grow'>
@@ -37,7 +37,7 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-white bg-gray-700 pl-8'
                     />
-                    <FaSignInAlt className='absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-400' />
+                    <FaKey className='absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-400' />
                 </div>
             </div>
             <div className='flex justify-center'>
