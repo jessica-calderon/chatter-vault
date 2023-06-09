@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { HiChatAlt2 } from "react-icons/hi";
-import { FaSignInAlt } from "react-icons/fa";
-import { FiLogOut } from "react-icons/fi";
 import axios from "axios";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import ChatList from "./components/ChatList/ChatList";
 import Chat from "./components/Chat/Chat";
 import ChatForm from "./components/ChatForm/ChatForm";
 import AuthForm from "./components/AuthForm/AuthForm";
-import Footer from "./components/Footer/Footer";
 import "./index.css";
 
 function App() {
@@ -21,7 +17,13 @@ function App() {
 
     async function handleLogin(username: any, password: any) {
         try {
-            const response = await axios.post("/login", { email: username, password });
+            const response = await axios.post("http://localhost:3000/login", {
+                email: username,
+                password,
+              });
+              
+             
+              
             const { token, userId, name } = response.data;
             // Save the token, userId, and name to local storage or state as needed
             // ...
@@ -34,7 +36,10 @@ function App() {
 
     async function handleFormSubmit(username: any, password: any) {
         try {
-            const response = await axios.post("/signup", { email: username, password });
+            const response = await axios.post("http://localhost:3000/signup", {
+                email: username,
+                password,
+              });
             const { token, userId, name } = response.data;
             // Save the token, userId, and name to local storage or state as needed
             // ...
@@ -52,8 +57,7 @@ function App() {
                     <div className='container mx-auto'>
                         <div className='flex items-center justify-between px-4 py-3'>
                             <div>
-                                <Link to='/' className='text-white text-lg font-bold flex items-center'>
-                                    <HiChatAlt2 className='text-white mr-2' />
+                                <Link to='/' className='text-white text-lg font-bold'>
                                     ChatterVault
                                 </Link>
                             </div>
@@ -62,7 +66,6 @@ function App() {
                                     <>
                                         <li>
                                             <Link to='/' className='text-white hover:text-gray-300'>
-                                                <HiChatAlt2 className='text-white mr-2' />
                                                 Chat List
                                             </Link>
                                         </li>
@@ -74,15 +77,13 @@ function App() {
                                         <li>
                                             <span className='text-white'>Logged in</span>
                                             <button onClick={handleLogout} className='text-white hover:text-gray-300 ml-2'>
-                                                <FiLogOut className='text-white mr-1' />
                                                 Logout
                                             </button>
                                         </li>
                                     </>
                                 ) : (
                                     <li>
-                                        <Link to='/login' className='text-white hover:text-gray-300 flex items-center'>
-                                            <FaSignInAlt className='text-white mr-1' />
+                                        <Link to='/login' className='text-white hover:text-gray-300'>
                                             Login/Sign Up
                                         </Link>
                                     </li>
@@ -99,12 +100,10 @@ function App() {
                     {!isLoggedIn && (
                         <Route
                             path='/login'
-                            element={<AuthForm formTitle='Login' submitButtonText='Login' onSubmit={handleFormSubmit} onLogin={handleLogin} />}
+                            element={<AuthForm />}
                         />
                     )}
                 </Routes>
-
-                <Footer />
             </div>
         </Router>
     );

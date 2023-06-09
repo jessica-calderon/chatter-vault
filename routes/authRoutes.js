@@ -43,10 +43,10 @@ router.post("/signup", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { login, password } = req.body; // change email to login
 
-        // Check if email is registered
-        const user = await User.findOne({ email });
+        // Check if login matches an email or username
+        const user = await User.findOne({ $or: [{ email: login }, { username: login }] });
         if (!user) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
@@ -66,14 +66,6 @@ router.post("/login", async (req, res) => {
         console.error("Error during login:", error);
         res.status(500).json({ message: "Internal server error" });
     }
-});
-
-router.post("/logout", (req, res) => {
-    // Perform logout logic
-    // For example, clearing user session or token
-
-    // Return success response
-    res.status(200).json({ message: "Logout successful" });
 });
 
 module.exports = router;
